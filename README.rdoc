@@ -9,6 +9,47 @@ InkscapeGenerator (http://wiki.colivre.net/Aurium/InkscapeGenerator)
 Heckert's original script unfortunately broke for me several times and 
 I took the opportunity to rewrite it and make it more extendable for future.
 
+= Requirements
+
+* Inkscape (preferably in PATH)
+
+= USAGE
+
+== Install the gem
+
+  gem install inkscape_merge
+
+== Create files
+
+Create CSV data file with first row as a header. The values from this row are
+used as keys in the SVG file substitution.
+
+Create SVG file that contains some variables in the form:
+
+  %VAR_name%
+
+Where `name` is the name of a column in the CSV file created previously.
+These variables can be anywhere inside the SVG, from plain text nodes to color values.
+This script just brute-forcedly `gsubs` these values as text w/o any thought.
+
+== Run the script
+
+The script requires at least three arguments:
+* the input SVG file
+* the input CSV file
+* and the output file `pattern`
+
+Note: output pattern undergoes the same substitutions as the SVG file, so to create easily unique file names.
+Additionally the output pattern can contain `%d` which is replaced with current row number.
+
+Example:
+  inkscape_merge -f postcard.svg -d names.csv -o postcards/card_%d.pdf
+  
+This produces files like:
+* postcards/
+  * card_1.pdf
+  * card_2.pdf
+
 == Contributing to inkscape_merge
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
