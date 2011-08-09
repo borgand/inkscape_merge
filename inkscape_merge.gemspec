@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/inkscape_merge",
+    "inkscape_merge.gemspec",
     "lib/inkscape_merge.rb",
     "lib/inkscape_merge/data_parsers.rb",
     "lib/inkscape_merge/processor.rb",
