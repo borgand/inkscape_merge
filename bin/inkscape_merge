@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'inkscape_merge'
+require 'optparse'
+
+
+processor = Inkscape::Merge::Processor.new
+options = processor.options
+
+# Parse command line arguments
+OptionParser.new do |opts|
+  opts.banner = "Usage: inkscape_csv_merge.rb [options]"
+  opts.separator ""
+  opts.separator "REQUIRED options"
+  opts.on("-d", "--data-file [DATA_FILE]", "Data-file to take values from.") {|d| options.data_file = d}
+  opts.on("-f", "--svg-file [SVG_FILE]", "SVG file to be used as template. Default: none") {|f| options.svg_file = f}
+  opts.on('-o', '--output_pattern PAT', 'Pattern to produce output file names. Undergoes the same substitutions as the SVG file and additionally %d can be used for current row number. Default: none') {|p|
+    options.output = p
+  }
+  
+  opts.separator ""
+  opts.separator "Optional"
+  opts.on('-i', '--inkscape INKSCAPE_BIN', "Where Inkscape binary can be found") {|i| options.inkscape = i}
+  opts.on('--format FMT', "Output format. Must be supported export format of Inkscape. Default: #{options.format}"){|f| options.format = f}
+  opts.on("--dpi DPI", Integer, "Specify output DPI. Default: #{options.dpi}") {|d| options.dpi = d}
+  opts.on("-v", "--[no-]verbose", "Run verbosely") {|v| options.verbose = v}
+  opts.on("-l", "--limit [LIMIT]", Integer, "Only process LIMIT rows. 0 means no limit. Default: #{options.limit}") {|l|
+    options.limit = l
+  }
+  
+  opts.separator ""
+  opts.separator "CSV parser options"
+  opts.on("--csv_col_sep SEP", "CSV column separator. Default: #{options.csv_options[:col_sep]}") {|v| opts.csv_options[:col_sep] = v}
+  opts.on("--csv_encoding ENC", "CSV file encoding. Default: #{options.csv_options[:encoding]}") {|e| opts.csv_options[:encoding] = e}
+  
+  opts.separator ""
+
+  opts.on_tail("-h", "--help", "Show this help") { puts opts; exit }
+end.parse!
+
+# Run the processor
+begin
+  processor.run
+rescue => e
+  $stderr.puts "ERROR: #{e}"
+  exit 1
+end
