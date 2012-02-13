@@ -17,7 +17,7 @@ module Inkscape # :nodoc:
         @options.csv_options = {:headers => true, :col_sep => ',', :encoding => 'utf-8'}
         @options.limit = 0
         @options.dpi = 300
-        @options.inkscape = %x(which inkscape)
+        @options.inkscape = %x(which inkscape).chomp
         # If no Inkscape in PATH, try to guess from platform
         if options.inkscape.empty?
           options.inkscape = case RUBY_PLATFORM
