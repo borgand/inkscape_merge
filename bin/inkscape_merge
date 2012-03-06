@@ -43,5 +43,6 @@ begin
   processor.run
 rescue => e
   $stderr.puts "ERROR: #{e}"
+  $stderr.puts e.backtrace if options.verbose
   exit 1
 end
