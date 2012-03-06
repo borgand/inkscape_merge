@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "inkscape_merge"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Laas Toom"]
-  s.date = "2012-02-13"
+  s.date = "2012-03-06"
   s.description = "Script to merge SVG files with CSV data-files using Inkscape, to produce\n  one outputfile (e.g. PDF) per data-row."
   s.email = "laas.toom@gmail.com"
   s.executables = ["inkscape_merge"]
