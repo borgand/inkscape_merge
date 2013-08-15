@@ -6,3 +6,6 @@ group :development do
   gem "bundler"
   gem "jeweler"
 end
+
+# Ruby 1.9 merged FasterCSV as core CSV library
+gem "fastercsv", :platforms => :ruby_18

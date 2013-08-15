@@ -5,6 +5,7 @@ GEM
     builder (3.2.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    fastercsv (1.5.5)
     git (1.2.5)
     github_api (0.10.1)
       addressable
@@ -50,5 +51,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  fastercsv
   jeweler
   shoulda
