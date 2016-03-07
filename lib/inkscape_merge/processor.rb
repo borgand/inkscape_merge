@@ -4,11 +4,11 @@ require 'fileutils'
 require 'inkscape_merge/data_parsers'
 
 module Inkscape # :nodoc:
-  module Merge # :nodoc:    
+  module Merge # :nodoc:
     # Main class to initialize processing
     class Processor
       attr_reader :options
-      
+
       # Initialize the processor, setting files and options
       def initialize
         @options = OpenStruct.new
@@ -25,18 +25,18 @@ module Inkscape # :nodoc:
               "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
             end
         end
-        
-      end  
-      
+
+      end
+
       # Iterate over all data rows and generate output files
       # Optionally stop when LIMIT is reached
       def run
         validate_options
-        
+
         # Open the files
         @svg = File.read options.svg_file
         @data_file = DataParser.detect(options)
-        
+
         count = 0
         headers = @data_file.headers
         pattern = /%VAR_(#{headers.map(&:to_s).join("|")})%/
@@ -53,17 +53,17 @@ module Inkscape # :nodoc:
                   row[$1]
               }
             }
-            
+
             # Write merged SVG out
             tmp_file.puts merged_svg
             tmp_file.close
-            
+
             # Sprintf outfile with current row number
             outfile %= count
-            
+
             # Generate output path
             FileUtils.mkdir_p(File.dirname outfile)
-            
+
             # Generate the file itself
             ink_generate tmp_file.path, outfile, @options.format, @options.dpi
           rescue => e
@@ -74,13 +74,13 @@ module Inkscape # :nodoc:
           end
         }
       end
-      
+
       private
-      
+
       # Validate options and give error if something is missing
       def validate_options
         # TODO: replace with
-        
+
         # If inkscape can not be found or run, bail out
         unless File.executable? @options.inkscape
           raise ArgumentError, "Inkscape not found or not executable"
@@ -96,9 +96,12 @@ module Inkscape # :nodoc:
 
         unless @options.output
           raise ArgumentError, "Output pattern must be given"
+        else
+          # Ensure absolute pathname
+          @options.output = File.absolute_path(@options.output)
         end
       end
-      
+
       # Run Inkscape to generate files
       def ink_generate(in_file, out_file, format='pdf', dpi="300")
         cmd = %(#{@options.inkscape} --without-gui --export-#{format}=#{out_file} --export-dpi=#{dpi} #{in_file})
