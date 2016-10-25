@@ -1,4 +1,4 @@
-require 'helper'
+require_relative 'helper'
 require 'inkscape_merge/data_parsers'
 
 class TestInkscapeMerge < Test::Unit::TestCase
