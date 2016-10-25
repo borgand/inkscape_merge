@@ -3,5 +3,5 @@ source "http://rubygems.org"
 # Include everything needed to run rake, tests, features, etc.
 group :development do
   gem 'juwelier', '~> 2.1'
-  gem 'minitest', '~> 5.9'
+  gem 'rspec', '~> 3.5'
 end
