@@ -2,6 +2,7 @@ require 'ostruct'
 require 'tempfile'
 require 'fileutils'
 require 'inkscape_merge/data_parsers'
+require 'shellwords'
 
 module Inkscape # :nodoc:
   module Merge # :nodoc:
@@ -65,7 +66,7 @@ module Inkscape # :nodoc:
             FileUtils.mkdir_p(File.dirname outfile)
 
             # Generate the file itself
-            ink_generate tmp_file.path, outfile, @options.format, @options.dpi
+            ink_generate tmp_file.path, Shellwords.escape(outfile), @options.format, @options.dpi
           rescue => e
             $stderr.puts "ERROR: #{e}"
             $stderr.puts e.backtrace if @options.verbose
