@@ -4,7 +4,7 @@ source "http://rubygems.org"
 group :development do
   gem "shoulda", ">= 0"
   gem "bundler"
-  gem "jeweler"
+  gem "juwelier"
 end
 
 # Ruby 1.9 merged FasterCSV as core CSV library
