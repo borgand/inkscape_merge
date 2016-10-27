@@ -105,7 +105,22 @@ module Inkscape # :nodoc:
 
       # Run Inkscape to generate files
       def ink_generate(in_file, out_file, format='pdf', dpi="300")
-        cmd = %(#{@options.inkscape} --without-gui --export-#{format}=#{out_file} --export-dpi=#{dpi} #{in_file})
+	
+	new_in_file = case RUBY_PLATFORM 
+		      when /cygwin/ 
+			  Shellwords.escape(`cygpath.exe #{in_file} -w`.strip)
+		      else 
+			  in_file
+		      end
+		      
+	new_out_file =  case RUBY_PLATFORM 
+			when /cygwin/ 
+			    Shellwords.escape(`cygpath.exe #{out_file} -w`.strip)
+			else 
+			    out_file
+			end
+		
+	cmd = %(#{Shellwords.escape(@options.inkscape)} --without-gui --export-dpi=#{dpi} --export-#{format}=#{new_out_file} #{new_in_file})
         puts "INKSCAPE CMD: #{cmd}" if @options.verbose
         ink_error = `#{cmd} 2>&1`
         unless $?.success?
