@@ -1,3 +1,4 @@
+require 'cgi'
 require 'ostruct'
 require 'tempfile'
 require 'fileutils'
@@ -51,7 +52,7 @@ module Inkscape # :nodoc:
                 s.gsub(pattern){|m|
                   puts $1 if @options.verbose
                   # return corresponding value from current row
-                  row[$1]
+                  CGI.escapeHTML(row[$1])
               }
             }
 

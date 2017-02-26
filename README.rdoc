@@ -50,6 +50,8 @@ This produces files like:
   * card_1.pdf
   * card_2.pdf
 
+Any special SVG (XML) characters within the CSV data file's values will be automatically converted to XML entity references (such as `&` becoming `&amp;`).
+
 == Contributing to inkscape_merge
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
